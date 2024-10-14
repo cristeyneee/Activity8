@@ -1,0 +1,31 @@
+---
+- name: Install MySQL server on Ubuntu
+  when: ansible_distribution == "Ubuntu"
+  apt:
+    name: mysql-server
+    state: present
+
+- name: Install MySQL server on CentOS
+  when: ansible_distribution == "CentOS"
+  yum:
+    name: mariadb-server
+    state: present
+
+- name: Ensure MySQL is running on Ubuntu
+  when: ansible_distribution == "Ubuntu"
+  service:
+    name: mysql
+    state: started
+    enabled: true
+
+- name: Ensure MySQL is running on CentOS
+  when: ansible_distribution == "CentOS"
+  service:
+    name: mariadb
+    state: started
+    enabled: true
+
+- name: Create Nagios database
+  mysql_db:
+    name: nagios
+    state: present

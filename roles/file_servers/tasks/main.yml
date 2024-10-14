@@ -1,0 +1,26 @@
+---
+- name: Install NFS server on Ubuntu
+  when: ansible_distribution == "Ubuntu"
+  apt:
+    name: nfs-kernel-server
+    state: present
+
+- name: Install NFS server on CentOS
+  when: ansible_distribution == "CentOS"
+  yum:
+    name: nfs-utils
+    state: present
+
+- name: Ensure NFS is running on Ubuntu
+  when: ansible_distribution == "Ubuntu"
+  service:
+    name: nfs-kernel-server
+    state: started
+    enabled: true
+
+- name: Ensure NFS is running on CentOS
+  when: ansible_distribution == "CentOS"
+  service:
+    name: nfs-server
+    state: started
+    enabled: true

@@ -1,0 +1,35 @@
+---
+- name: Install required packages for Nagios on Ubuntu
+  when: ansible_distribution == "Ubuntu"
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - wget
+    - curl
+    - gcc
+    - make
+    - libgd-dev
+    - apache2
+    - php
+    - libapache2-mod-php
+    - build-essential
+
+- name: Install required packages for Nagios on CentOS
+  when: ansible_distribution == "CentOS"
+  yum:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - wget
+    - curl
+    - gcc
+    - glibc
+    - glibc-common
+    - gd
+    - gd-devel
+    - httpd
+    - php
+    - php-cli
+    - make
+    - net-snmp
